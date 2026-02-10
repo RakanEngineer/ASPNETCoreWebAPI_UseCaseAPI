@@ -132,7 +132,7 @@ public class TicketsController : ControllerBase
             AssignedTo: ticket.AssignedTo,
             Comments: ticket.GetComments()
             .Select(c => new CommentDto(c, DateTime.UtcNow))
-            .ToList());
+            .ToList(), Priority: ticket.Priority);
 
         return Created(string.Empty, response); // 201 Created
     }
@@ -152,7 +152,7 @@ public class TicketsController : ControllerBase
             AssignedTo: ticket.AssignedTo,
             Comments: ticket.GetComments()
             .Select(c => new CommentDto(c, DateTime.UtcNow))
-            .ToList()));
+            .ToList(), Priority: ticket.Priority));
 
         return Ok(response); // 200 OK
     }
@@ -174,7 +174,7 @@ public class TicketsController : ControllerBase
             AssignedTo: ticket.AssignedTo,
             Comments: ticket.GetComments()
             .Select(c => new CommentDto(c, DateTime.UtcNow))
-            .ToList());
+            .ToList(), Priority: ticket.Priority);
 
         return Ok(response); // 200 OK
     }

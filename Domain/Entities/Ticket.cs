@@ -12,7 +12,7 @@ public class Ticket
     public string? AssignedTo { get; set; }
     public DateTime? ClosedAt { get; set; }
     public bool IsEscalated { get; set; }
-    public int Priority { get; set; }
+    public int Priority { get; set; } = 0; // 0 = Low, 3 = Medium, 5 = High
 
     public string CommentsJson { get; set; } = "[]";
 
