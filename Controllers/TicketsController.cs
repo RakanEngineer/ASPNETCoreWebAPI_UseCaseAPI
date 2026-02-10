@@ -128,7 +128,8 @@ public class TicketsController : ControllerBase
             Title: ticket.Title,
             Description: ticket.Description,
             CreatedAt: ticket.CreatedAt,
-            AssignedTo: ticket.AssignedTo);
+            AssignedTo: ticket.AssignedTo,
+            Comment: ticket.Comment);
 
         return Created(string.Empty, response); // 201 Created
     }
@@ -144,7 +145,7 @@ public class TicketsController : ControllerBase
             Id: ticket.Id,
             Title: ticket.Title,
             Description: ticket.Description,
-            CreatedAt: ticket.CreatedAt, AssignedTo: ticket.AssignedTo));
+            CreatedAt: ticket.CreatedAt, AssignedTo: ticket.AssignedTo, ticket.Comment));
 
         return Ok(response); // 200 OK
     }
@@ -163,7 +164,7 @@ public class TicketsController : ControllerBase
             Title: ticket.Title,
             Description: ticket.Description,
             CreatedAt: ticket.CreatedAt,
-            AssignedTo: ticket.AssignedTo);
+            AssignedTo: ticket.AssignedTo, ticket.Comment);
 
         return Ok(response); // 200 OK
     }
@@ -194,6 +195,13 @@ public class TicketsController : ControllerBase
     public async Task<IActionResult> Escalate(int id)
     {
         await _ticketService.EscalateTicketAsync(id);
+        return NoContent();
+    }
+
+    [HttpPost("{id}/add-comment")]
+    public async Task<IActionResult> AddComment(int id, TicketDto dto)
+    {
+        await _ticketService.AddCommentAsync(id, dto.Comment);
         return NoContent();
     }
 

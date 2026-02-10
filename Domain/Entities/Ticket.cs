@@ -1,4 +1,5 @@
-﻿namespace HelpDesk.Domain.Entities;
+﻿
+namespace HelpDesk.Domain.Entities;
 
 public class Ticket
 {
@@ -9,4 +10,7 @@ public class Ticket
     public string? AssignedTo { get; set; }
     public DateTime? ClosedAt { get; set; }
     public bool IsEscalated { get; set; }
+    public string Comment { get; internal set; } = string.Empty;
+
+    public List<string> Comments { get; internal set; } = new List<string>();
 }

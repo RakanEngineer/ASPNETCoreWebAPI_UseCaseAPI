@@ -85,5 +85,20 @@ public class TicketService : ITicketService
 
         return ticket;
     }
+    public async Task<Ticket> AddCommentAsync(int id, string comment)
+    {
+        var ticket = await _ticketRepository.GetByIdAsync(id);
+
+        if (ticket == null)
+            throw new Exception("Ticket not found");
+
+        ticket.Comments ??= new List<string>();
+        ticket.Comments.Add(comment);
+
+        await _ticketRepository.UpdateAsync(ticket);
+
+        return ticket;
+    }
+
 
 }
