@@ -1,0 +1,11 @@
+﻿using HelpDesk.Domain.Entities;
+
+namespace ASPNETCoreWebAPI_CQRS.Application.Services;
+
+public interface ITicketService
+{
+    Task<IReadOnlyList<Ticket>> GetTicketsAsync();
+    Task<Ticket?> GetTicketAsync(int id);
+    Task<Ticket> CreateTicketAsync(string title, string descrption);
+    // delete, update, etc...  CRUD = create-read-update-delete
+}
