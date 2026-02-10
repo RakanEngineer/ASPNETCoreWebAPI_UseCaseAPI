@@ -29,5 +29,20 @@ public class TicketService : ITicketService
         => await _ticketRepository.GetByIdAsync(id);
 
     public async Task<IReadOnlyList<Ticket>> GetTicketsAsync()
-        => await _ticketRepository.GetAllAsync();    
+        => await _ticketRepository.GetAllAsync();
+
+    public async Task<Ticket> AssignTicketAsync(int id, string assignedTo)
+    {
+        var ticket = await _ticketRepository.GetByIdAsync(id);
+
+        if (ticket == null)
+            throw new Exception("Ticket not found");
+
+        ticket.AssignedTo = assignedTo;
+
+        await _ticketRepository.UpdateAsync(ticket);
+
+        return ticket;
+    }
+
 }

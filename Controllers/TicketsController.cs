@@ -127,7 +127,8 @@ public class TicketsController : ControllerBase
             Id: ticket.Id,
             Title: ticket.Title,
             Description: ticket.Description,
-            CreatedAt: ticket.CreatedAt);
+            CreatedAt: ticket.CreatedAt,
+            AssignedTo: ticket.AssignedTo);
 
         return Created(string.Empty, response); // 201 Created
     }
@@ -143,7 +144,7 @@ public class TicketsController : ControllerBase
             Id: ticket.Id,
             Title: ticket.Title,
             Description: ticket.Description,
-            CreatedAt: ticket.CreatedAt));
+            CreatedAt: ticket.CreatedAt, AssignedTo: ticket.AssignedTo));
 
         return Ok(response); // 200 OK
     }
@@ -161,9 +162,18 @@ public class TicketsController : ControllerBase
             Id: ticket.Id,
             Title: ticket.Title,
             Description: ticket.Description,
-            CreatedAt: ticket.CreatedAt);
+            CreatedAt: ticket.CreatedAt,
+            AssignedTo: ticket.AssignedTo);
 
         return Ok(response); // 200 OK
+    }
+
+    // POST /api/tickets/{id}/assign
+    [HttpPost("{id}/assign")]
+    public async Task<IActionResult> Assign(int id, TicketDto dto)
+    {
+        await _ticketService.AssignTicketAsync(id, dto.AssignedTo);
+        return NoContent();
     }
 
     // Delete

@@ -29,4 +29,10 @@ public class TicketRepository : ITicketRepository
     {
         return await _dbContext.Tickets.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
     }
+    public async Task UpdateAsync(Ticket ticket)
+    {
+        _dbContext.Tickets.Update(ticket);
+        await _dbContext.SaveChangesAsync();
+    }
+
 }
