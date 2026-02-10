@@ -176,6 +176,13 @@ public class TicketsController : ControllerBase
         return NoContent();
     }
 
+    [HttpPost("{id}/close")]
+    public async Task<IActionResult> Close(int id)
+    {
+        await _ticketService.CloseTicketAsync(id);
+        return NoContent();
+    }
+
     // Delete
 
     // Patch (uppdaterar)

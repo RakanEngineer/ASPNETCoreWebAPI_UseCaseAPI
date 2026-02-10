@@ -11,5 +11,7 @@ public interface ITicketService
     // delete, update, etc...  CRUD = create-read-update-delete
     
     Task<Ticket> AssignTicketAsync(int id, string assignedTo);
+    Task<Ticket> CloseTicketAsync(int id);
+
 
 }
