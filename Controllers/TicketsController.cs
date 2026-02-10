@@ -1,5 +1,6 @@
 ﻿using ASPNETCoreWebAPI_CQRS.Application.Services;
 using ASPNETCoreWebAPI_CQRS.Dtos.Tickets;
+using ASPNETCoreWebAPI_UseCaseAPI.Dtos.Tickets;
 using HelpDesk.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
@@ -129,7 +130,9 @@ public class TicketsController : ControllerBase
             Description: ticket.Description,
             CreatedAt: ticket.CreatedAt,
             AssignedTo: ticket.AssignedTo,
-            Comment: ticket.Comment);
+            Comments: ticket.GetComments()
+            .Select(c => new CommentDto(c, DateTime.UtcNow))
+            .ToList());
 
         return Created(string.Empty, response); // 201 Created
     }
@@ -145,7 +148,11 @@ public class TicketsController : ControllerBase
             Id: ticket.Id,
             Title: ticket.Title,
             Description: ticket.Description,
-            CreatedAt: ticket.CreatedAt, AssignedTo: ticket.AssignedTo, ticket.Comment));
+            CreatedAt: ticket.CreatedAt, 
+            AssignedTo: ticket.AssignedTo,
+            Comments: ticket.GetComments()
+            .Select(c => new CommentDto(c, DateTime.UtcNow))
+            .ToList()));
 
         return Ok(response); // 200 OK
     }
@@ -164,7 +171,10 @@ public class TicketsController : ControllerBase
             Title: ticket.Title,
             Description: ticket.Description,
             CreatedAt: ticket.CreatedAt,
-            AssignedTo: ticket.AssignedTo, ticket.Comment);
+            AssignedTo: ticket.AssignedTo,
+            Comments: ticket.GetComments()
+            .Select(c => new CommentDto(c, DateTime.UtcNow))
+            .ToList());
 
         return Ok(response); // 200 OK
     }
@@ -173,6 +183,9 @@ public class TicketsController : ControllerBase
     [HttpPost("{id}/assign")]
     public async Task<IActionResult> Assign(int id, TicketDto dto)
     {
+        if (string.IsNullOrWhiteSpace(dto.AssignedTo))
+            return BadRequest("AssignedTo cannot be empty");
+
         await _ticketService.AssignTicketAsync(id, dto.AssignedTo);
         return NoContent();
     }
@@ -199,9 +212,16 @@ public class TicketsController : ControllerBase
     }
 
     [HttpPost("{id}/add-comment")]
-    public async Task<IActionResult> AddComment(int id, TicketDto dto)
+    public async Task<IActionResult> AddComment(int id, CommentDto dto)
     {
         await _ticketService.AddCommentAsync(id, dto.Comment);
+        return NoContent();
+    }
+
+    [HttpPost("{id}/change-priority")]
+    public async Task<IActionResult> ChangePriority(int id, ChangePriorityDto dto)
+    {
+        await _ticketService.ChangePriorityAsync(id, dto.Priority);
         return NoContent();
     }
 

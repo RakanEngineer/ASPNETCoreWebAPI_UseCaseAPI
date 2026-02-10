@@ -1,4 +1,6 @@
 ﻿
+using System.Text.Json;
+
 namespace HelpDesk.Domain.Entities;
 
 public class Ticket
@@ -10,7 +12,20 @@ public class Ticket
     public string? AssignedTo { get; set; }
     public DateTime? ClosedAt { get; set; }
     public bool IsEscalated { get; set; }
-    public string Comment { get; internal set; } = string.Empty;
+    public int Priority { get; set; }
 
-    public List<string> Comments { get; internal set; } = new List<string>();
+    public string CommentsJson { get; set; } = "[]";
+
+    public List<string> GetComments()
+    {
+        return JsonSerializer.Deserialize<List<string>>(CommentsJson)
+               ?? new List<string>();
+    }
+
+    public void AddComment(string comment)
+    {
+        var comments = GetComments();
+        comments.Add(comment);
+        CommentsJson = JsonSerializer.Serialize(comments);
+    }
 }

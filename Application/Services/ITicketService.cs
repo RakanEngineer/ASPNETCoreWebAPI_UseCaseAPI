@@ -16,4 +16,5 @@ public interface ITicketService
     Task<Ticket> ReopenTicketAsync(int id);
     Task<Ticket> EscalateTicketAsync(int id);
     Task<Ticket> AddCommentAsync(int id, string comment);
+    Task<Ticket> ChangePriorityAsync(int id, int priority);
 }

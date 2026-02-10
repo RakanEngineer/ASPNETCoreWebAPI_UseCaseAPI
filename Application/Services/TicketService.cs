@@ -92,8 +92,21 @@ public class TicketService : ITicketService
         if (ticket == null)
             throw new Exception("Ticket not found");
 
-        ticket.Comments ??= new List<string>();
-        ticket.Comments.Add(comment);
+        ticket.AddComment(comment);
+
+        await _ticketRepository.UpdateAsync(ticket);
+
+        return ticket;
+    }
+
+    public async Task<Ticket> ChangePriorityAsync(int id, int priority)
+    {
+        var ticket = await _ticketRepository.GetByIdAsync(id);
+
+        if (ticket == null)
+            throw new Exception("Ticket not found");
+
+        ticket.Priority = priority;
 
         await _ticketRepository.UpdateAsync(ticket);
 
