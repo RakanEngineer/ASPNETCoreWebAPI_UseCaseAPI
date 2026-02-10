@@ -1,28 +1,89 @@
-@HelpDesk_HostAddress = http://localhost:8000
+@HelpDesk_HostAddress = https://localhost:9000
+
+# -----------------------------
+# GET All Tickets
+# -----------------------------
 
 GET {{HelpDesk_HostAddress}}/api/tickets
 Accept: application/json
 
-### 
+###
 
+# -----------------------------
+# GET Ticket by ID
+# -----------------------------
 GET {{HelpDesk_HostAddress}}/api/tickets/1
 Accept: application/json
 
-### 
+###
 
+# -----------------------------
+# POST Create a Ticket
+# -----------------------------
 POST {{HelpDesk_HostAddress}}/api/tickets
 Content-Type: application/json
 
 {
-    "title": "Problem med login",
-    "description": "Kan inte logga in med mitt konto"
+    "title": "Login problem",
+    "description": "Cannot log in with my account"
 }
 
 ###
 
+# -----------------------------
+# POST Assign Ticket
+# -----------------------------
 POST {{HelpDesk_HostAddress}}/api/tickets/1/assign
 Content-Type: application/json
 
 {
-  "assignedTo": "Nils Nilsson"
+    "assignedTo": "John Doe"
+}
+
+###
+
+# -----------------------------
+# POST Close Ticket
+# -----------------------------
+POST {{HelpDesk_HostAddress}}/api/tickets/1/close
+Content-Type: application/json
+
+###
+
+# -----------------------------
+# POST Reopen Ticket
+# -----------------------------
+POST {{HelpDesk_HostAddress}}/api/tickets/1/reopen
+Content-Type: application/json
+
+###
+
+# -----------------------------
+# POST Escalate Ticket
+# -----------------------------
+POST {{HelpDesk_HostAddress}}/api/tickets/1/escalate
+Content-Type: application/json
+
+###
+
+# -----------------------------
+# POST Add Comment
+# -----------------------------
+POST {{HelpDesk_HostAddress}}/api/tickets/1/add-comment
+Content-Type: application/json
+
+{
+    "comment": "We started troubleshooting"
+}
+
+###
+
+# -----------------------------
+# POST Change Priority
+# -----------------------------
+POST {{HelpDesk_HostAddress}}/api/tickets/1/change-priority
+Content-Type: application/json
+
+{
+    "priority": 2
 }

@@ -33,7 +33,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(c =>
     {
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "HelpDesk API V1");
-        c.RoutePrefix = string.Empty; // يجعل Swagger متاح على http://localhost:8000/ مباشرة
+        c.RoutePrefix = string.Empty; // Swagger http://localhost:8000/ 
     });
 }
 
