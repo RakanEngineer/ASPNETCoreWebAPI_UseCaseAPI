@@ -44,7 +44,7 @@ public class TicketService : ITicketService
 
         return ticket;
     }
-
+    // # CloseTicket
     public async Task<Ticket> CloseTicketAsync(int id)
     {
         var ticket = await _ticketRepository.GetByIdAsync(id);
@@ -58,6 +58,19 @@ public class TicketService : ITicketService
 
         return ticket;
     }
+    // # Reopen ticket
+    public async Task<Ticket> ReopenTicketAsync(int id)
+    {
+        var ticket = await _ticketRepository.GetByIdAsync(id);
 
+        if (ticket == null)
+            throw new Exception("Ticket not found");
+
+        ticket.ClosedAt = null;
+
+        await _ticketRepository.UpdateAsync(ticket);
+
+        return ticket;
+    }
 
 }

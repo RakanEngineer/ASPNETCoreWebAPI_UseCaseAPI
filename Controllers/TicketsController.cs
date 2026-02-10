@@ -183,6 +183,13 @@ public class TicketsController : ControllerBase
         return NoContent();
     }
 
+    [HttpPost("{id}/reopen")]
+    public async Task<IActionResult> Reopen(int id)
+    {
+        await _ticketService.ReopenTicketAsync(id);
+        return NoContent();
+    }
+
     // Delete
 
     // Patch (uppdaterar)

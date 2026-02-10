@@ -13,5 +13,7 @@ public interface ITicketService
     Task<Ticket> AssignTicketAsync(int id, string assignedTo);
     Task<Ticket> CloseTicketAsync(int id);
 
+    Task<Ticket> ReopenTicketAsync(int id);
+
 
 }
