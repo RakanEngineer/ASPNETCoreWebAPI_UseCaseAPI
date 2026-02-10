@@ -8,4 +8,5 @@ public class Ticket
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public string? AssignedTo { get; set; }
     public DateTime? ClosedAt { get; set; }
+    public bool IsEscalated { get; set; }
 }

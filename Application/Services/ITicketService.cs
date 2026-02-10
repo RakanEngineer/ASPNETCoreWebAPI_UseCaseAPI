@@ -14,6 +14,5 @@ public interface ITicketService
     Task<Ticket> CloseTicketAsync(int id);
 
     Task<Ticket> ReopenTicketAsync(int id);
-
-
+    Task<Ticket> EscalateTicketAsync(int id);
 }

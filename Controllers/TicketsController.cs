@@ -190,6 +190,13 @@ public class TicketsController : ControllerBase
         return NoContent();
     }
 
+    [HttpPost("{id}/escalate")]
+    public async Task<IActionResult> Escalate(int id)
+    {
+        await _ticketService.EscalateTicketAsync(id);
+        return NoContent();
+    }
+
     // Delete
 
     // Patch (uppdaterar)

@@ -72,5 +72,18 @@ public class TicketService : ITicketService
 
         return ticket;
     }
+    public async Task<Ticket> EscalateTicketAsync(int id)
+    {
+        var ticket = await _ticketRepository.GetByIdAsync(id);
+
+        if (ticket == null)
+            throw new Exception("Ticket not found");
+
+        ticket.IsEscalated = true;
+
+        await _ticketRepository.UpdateAsync(ticket);
+
+        return ticket;
+    }
 
 }
